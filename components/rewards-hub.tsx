@@ -213,7 +213,7 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 h-screen w-60 border-r border-border bg-background flex flex-col">
+      <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-60 border-r border-border bg-background flex-col">
         {/* Logo */}
         <div className="p-6 border-b border-border flex-shrink-0">
           <div className="flex items-center gap-3">
@@ -271,21 +271,23 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
               <div className="text-sm font-medium text-foreground truncate">
                 {user.email?.split("@")[0] || "Ibukun"}
               </div>
-              <div className="text-xs text-muted-foreground truncate">{user.email || "aluko.ibkjsp@gmail.com"}</div>
+              <div className="text-xs text-muted-foreground truncate">{user.email || "aluko.ibukun@gmail.com"}</div>
             </div>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-60 h-screen overflow-y-auto">
+      <main className="flex-1 lg:ml-60 h-screen overflow-y-auto">
         {/* Header - Only title, subtitle, notification, and tabs */}
         <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-          <div className="px-8 py-6">
-            <div className="flex items-center justify-between mb-6">
+          <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Rewards Hub</h1>
-                <p className="text-gray-600 mt-1">Earn points, unlock rewards, and celebrate your progress!</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Rewards Hub</h1>
+                <p className="text-sm sm:text-base text-gray-600 mt-1">
+                  Earn points, unlock rewards, and celebrate your progress!
+                </p>
               </div>
               {/* Notifications Popover */}
               <div className="relative" ref={notificationRef}>
@@ -300,13 +302,13 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                 </button>
 
                 {showNotifications && (
-                  <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
+                  <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
                     {/* Purple Header */}
-                    <div className="bg-primary px-6 py-4 flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-white">Notifications</h3>
-                      <div className="flex items-center gap-4">
-                        <button className="text-white text-sm hover:underline">Mark all as read</button>
-                        <button className="text-white text-sm hover:underline">Delete All</button>
+                    <div className="bg-primary px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+                      <h3 className="text-base sm:text-lg font-semibold text-white">Notifications</h3>
+                      <div className="flex items-center gap-2 sm:gap-4">
+                        <button className="text-white text-xs sm:text-sm hover:underline">Mark all as read</button>
+                        <button className="text-white text-xs sm:text-sm hover:underline">Delete All</button>
                       </div>
                     </div>
 
@@ -315,11 +317,11 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                       {notifications.map((notification) => (
                         <div
                           key={notification.id}
-                          className="px-6 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors flex items-start gap-3"
+                          className="px-4 sm:px-6 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors flex items-start gap-3"
                         >
                           {/* Icon */}
                           <div
-                            className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                               notification.icon === "flame"
                                 ? "bg-orange-100"
                                 : notification.icon === "welcome"
@@ -327,9 +329,15 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                                   : "bg-purple-100"
                             }`}
                           >
-                            {notification.icon === "flame" && <Flame className="w-5 h-5 text-orange-500" />}
-                            {notification.icon === "welcome" && <SmilePlus className="w-5 h-5 text-green-500" />}
-                            {notification.icon === "calendar" && <Calendar className="w-5 h-5 text-purple-500" />}
+                            {notification.icon === "flame" && (
+                              <Flame className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
+                            )}
+                            {notification.icon === "welcome" && (
+                              <SmilePlus className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
+                            )}
+                            {notification.icon === "calendar" && (
+                              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
+                            )}
                           </div>
 
                           {/* Content */}
@@ -352,47 +360,49 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
             </div>
 
             {/* Tabs */}
-            <div className="relative flex gap-8 border-b border-border">
-              <button
-                onClick={() => setActiveTab("earn")}
-                className={`pb-4 px-1 font-medium text-sm transition-colors ${
-                  activeTab === "earn" ? "text-primary" : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Earn Points
-              </button>
-              <button
-                onClick={() => setActiveTab("redeem")}
-                className={`pb-4 px-1 font-medium text-sm transition-colors ${
-                  activeTab === "redeem" ? "text-primary" : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Redeem Rewards
-              </button>
-              {/* Sliding underline indicator */}
+            <div className="relative">
+              <div className="flex gap-4 sm:gap-8">
+                <button
+                  onClick={() => setActiveTab("earn")}
+                  className={`pb-3 text-sm sm:text-base font-medium transition-colors relative ${
+                    activeTab === "earn" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Earn Points
+                </button>
+                <button
+                  onClick={() => setActiveTab("redeem")}
+                  className={`pb-3 text-sm sm:text-base font-medium transition-colors relative ${
+                    activeTab === "redeem" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Redeem Rewards
+                </button>
+              </div>
+              {/* Animated underline */}
               <div
-                className={`absolute bottom-0 h-1 bg-primary transition-all duration-300 ease-in-out ${
-                  activeTab === "earn" ? "left-0 w-[102px]" : "left-[134px] w-[138px]"
+                className={`absolute bottom-0 h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                  activeTab === "earn" ? "left-0 w-20 sm:w-24" : "left-24 sm:left-32 w-32 sm:w-36"
                 }`}
               />
             </div>
           </div>
         </div>
 
-        <div className="px-8 py-8">
+        {/* Content sections now outside sticky header */}
+        <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {activeTab === "earn" ? (
-            <div className="space-y-8">
+            <div className="space-y-8 sm:space-y-12">
               {/* Your Rewards Journey */}
-              <section className="space-y-4">
-                <div className="flex items-center gap-2">
+              <section>
+                <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-6 bg-primary rounded-full" />
-                  <h2 className="text-xl font-bold">Your Rewards Journey</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Your Rewards Journey</h2>
                 </div>
 
-                {/* Updated grid to use equal column widths for first two cards and fixed heights */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Points Balance */}
-                  <Card className="bg-violet-50/50 border-none shadow-sm h-[390px] p-6 flex flex-col">
+                  <Card className="bg-violet-50/50 border-none shadow-sm h-[410px] p-4 sm:p-6 flex flex-col">
                     <div className="flex items-center gap-2 mb-6">
                       <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
                         <Diamond className="h-3.5 w-3.5 text-white" />
@@ -423,7 +433,7 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                   </Card>
 
                   {/* Daily Streak */}
-                  <Card className="bg-blue-50/30 border-none shadow-sm h-[390px] p-6 flex flex-col">
+                  <Card className="bg-blue-50/30 border-none shadow-sm h-[410px] p-4 sm:p-6 flex flex-col">
                     <div className="flex items-center gap-2 mb-6">
                       <div className="w-6 h-6 rounded-full bg-cyan-500 flex items-center justify-center">
                         <Calendar className="h-3.5 w-3.5 text-white" />
@@ -431,14 +441,14 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                       <span className="text-sm font-medium text-foreground">Daily Streak</span>
                     </div>
                     <div className="mb-6">
-                      <span className="text-5xl font-bold text-primary">{userData.streak}</span>{" "}
-                      <span className="text-xl font-bold text-primary">day</span>
+                      <span className="text-4xl sm:text-5xl font-bold text-primary">{userData.streak}</span>{" "}
+                      <span className="text-lg sm:text-xl font-bold text-primary">day</span>
                     </div>
-                    <div className="flex gap-2 mb-6">
+                    <div className="flex gap-1 sm:gap-2 mb-6">
                       {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
                         <div
                           key={i}
-                          className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
+                          className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium ${
                             i === 2
                               ? "bg-white text-foreground border-2 border-primary"
                               : "bg-gray-200 text-muted-foreground"
@@ -460,9 +470,9 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                   </Card>
 
                   {/* Featured Spotlight */}
-                  <Card className="border-none shadow-sm h-[390px] overflow-hidden p-0 flex flex-col">
+                  <Card className="border-none shadow-sm h-[410px] overflow-hidden p-0 flex flex-col md:col-span-2 lg:col-span-1">
                     {/* Gradient top section */}
-                    <div className="bg-gradient-to-br from-[#8B5CF6] via-[#7C3AED] to-[#60A5FA] text-white relative p-6 pb-5">
+                    <div className="bg-gradient-to-br from-[#8B5CF6] via-[#7C3AED] to-[#60A5FA] text-white relative p-4 sm:p-6 pb-5">
                       <Badge className="bg-white/20 text-white hover:bg-white/30 mb-3 px-3 py-1 text-xs font-medium">
                         Featured
                       </Badge>
@@ -476,8 +486,8 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                     </div>
 
                     {/* White bottom section */}
-                    <div className="bg-white p-6 flex-1 flex flex-col">
-                      <div className="flex items-start gap-3 mb-6">
+                    <div className="bg-white p-4 sm:p-6 flex-1 flex flex-col">
+                      <div className="flex items-start gap-2 sm:gap-3 mb-4 sm:mb-6">
                         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                           <Calendar className="h-5 w-5 text-primary" />
                         </div>
@@ -490,12 +500,12 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                           </p>
                         </div>
                       </div>
-                      <div className="flex justify-between mt-auto">
-                        <Button className="bg-primary hover:bg-primary/90 text-white font-semibold px-5 h-10 text-sm rounded-full">
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 sm:justify-between mt-auto">
+                        <Button className="bg-primary hover:bg-primary/90 text-white font-semibold px-4 sm:px-5 h-10 text-sm rounded-full w-full sm:w-auto">
                           <Users className="h-4 w-4 mr-2" />
                           Sign up
                         </Button>
-                        <Button className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-5 h-10 text-sm rounded-full">
+                        <Button className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 sm:px-5 h-10 text-sm rounded-full w-full sm:w-auto">
                           <Gift className="h-4 w-4 mr-2" />
                           Claim 50 pts
                         </Button>
@@ -506,15 +516,15 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
               </section>
 
               {/* Earn More Points */}
-              <section className="space-y-6">
-                <div className="flex items-center gap-2">
+              <section>
+                <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-6 bg-primary rounded-full" />
-                  <h2 className="text-2xl font-bold">Earn More Points</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Earn More Points</h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6 mb-8 max-w-4xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 max-w-4xl">
                   <Card>
-                    <CardContent className="p-6">
+                    <CardContent className="p-4 sm:p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                           <Star className="h-6 w-6 text-primary" />
@@ -532,7 +542,7 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                   </Card>
 
                   <Card>
-                    <CardContent className="p-6">
+                    <CardContent className="p-4 sm:p-6">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                           <Share2 className="h-6 w-6 text-primary" />
@@ -559,15 +569,15 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
               </section>
 
               {/* Refer & Earn */}
-              <section className="space-y-6">
-                <div className="flex items-center gap-2">
+              <section>
+                <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-6 bg-primary rounded-full" />
-                  <h2 className="text-2xl font-bold">Refer & Earn</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Refer & Earn</h2>
                 </div>
 
-                <Card>
-                  <CardContent className="p-8">
-                    <div className="flex items-start gap-4 mb-8">
+                <Card className="bg-violet-50/30 border-none shadow-sm">
+                  <CardContent className="p-4 sm:p-8">
+                    <div className="flex items-start gap-3 sm:gap-4 mb-6 sm:mb-8">
                       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <Users className="h-6 w-6 text-primary" />
                       </div>
@@ -577,25 +587,27 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-8 mb-8">
+                    <div className="grid grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-8">
                       <div className="text-center">
-                        <div className="text-5xl font-bold text-primary mb-2">{userData.referrals}</div>
-                        <div className="text-sm text-muted-foreground">Referrals</div>
+                        <div className="text-3xl sm:text-5xl font-bold text-primary mb-2">{userData.referrals}</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground">Referrals</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-5xl font-bold text-primary mb-2">{userData.pointsEarned}</div>
-                        <div className="text-sm text-muted-foreground">Points Earned</div>
+                        <div className="text-3xl sm:text-5xl font-bold text-primary mb-2">{userData.pointsEarned}</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground">Points Earned</div>
                       </div>
                     </div>
 
                     <div className="mb-6">
-                      <label className="text-sm text-muted-foreground mb-2 block">Your personal referral link:</label>
+                      <label className="text-xs sm:text-sm text-muted-foreground mb-2 block">
+                        Your personal referral link:
+                      </label>
                       <div className="flex gap-2">
                         <input
                           type="text"
                           value={referralLink}
                           readOnly
-                          className="flex-1 px-4 py-3 bg-muted rounded-lg text-sm"
+                          className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-muted rounded-lg text-xs sm:text-sm"
                         />
                         <Button
                           onClick={copyToClipboard}
@@ -607,23 +619,23 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-center gap-3">
-                      <button className="w-12 h-12 rounded-full bg-[#1877F2] hover:bg-[#1877F2]/90 flex items-center justify-center text-white transition-colors">
+                    <div className="flex items-center justify-center gap-2 sm:gap-3">
+                      <button className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1877F2] hover:bg-[#1877F2]/90 flex items-center justify-center text-white transition-colors">
                         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
                       </button>
-                      <button className="w-12 h-12 rounded-full bg-black hover:bg-gray-800 flex items-center justify-center text-white transition-colors">
+                      <button className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black hover:bg-gray-800 flex items-center justify-center text-white transition-colors">
                         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M7.084 4.126H5.117z" />
                         </svg>
                       </button>
-                      <button className="w-12 h-12 rounded-full bg-[#0A66C2] hover:bg-[#0A66C2]/90 flex items-center justify-center text-white transition-colors">
+                      <button className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0A66C2] hover:bg-[#0A66C2]/90 flex items-center justify-center text-white transition-colors">
                         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                         </svg>
                       </button>
-                      <button className="w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#25D366]/90 flex items-center justify-center text-white transition-colors">
+                      <button className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#25D366] hover:bg-[#25D366]/90 flex items-center justify-center text-white transition-colors">
                         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                         </svg>
@@ -638,77 +650,66 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
               {/* Redeem Your Points */}
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1 h-6 bg-primary rounded-full" />
-                <h2 className="text-2xl font-bold">Redeem Your Points</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Redeem Your Points</h2>
               </div>
 
-              <div className="flex gap-2 mb-6">
-                <Button
-                  variant="secondary"
-                  className={`${
-                    activeFilter === "all"
-                      ? "bg-purple-100 text-primary hover:bg-purple-200"
-                      : "bg-transparent text-muted-foreground hover:bg-muted"
-                  }`}
+              {/* Filter Tabs */}
+              <div className="flex gap-2 sm:gap-4 mb-6 overflow-x-auto pb-2">
+                <button
                   onClick={() => setActiveFilter("all")}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
+                    activeFilter === "all"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-muted-foreground hover:bg-gray-200"
+                  }`}
                 >
-                  All Rewards{" "}
-                  <span
-                    className={`ml-2 text-xs px-2 py-0.5 rounded-full ${activeFilter === "all" ? "bg-white" : "bg-muted"}`}
-                  >
+                  All Rewards
+                  <Badge variant="secondary" className="bg-white/20 text-white text-xs">
                     {rewards.length}
-                  </span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className={`${
-                    activeFilter === "unlocked"
-                      ? "bg-purple-100 text-primary hover:bg-purple-200"
-                      : "text-muted-foreground hover:bg-muted"
-                  }`}
+                  </Badge>
+                </button>
+                <button
                   onClick={() => setActiveFilter("unlocked")}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
+                    activeFilter === "unlocked"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-muted-foreground hover:bg-gray-200"
+                  }`}
                 >
-                  Unlocked{" "}
-                  <span
-                    className={`ml-2 text-xs px-2 py-0.5 rounded-full ${activeFilter === "unlocked" ? "bg-white" : "bg-muted"}`}
-                  >
+                  Unlocked
+                  <Badge variant="secondary" className="bg-white/20 text-white text-xs">
                     {rewards.filter((r) => userData.points >= r.points_required && r.points_required > 0).length}
-                  </span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className={`${
-                    activeFilter === "locked"
-                      ? "bg-purple-100 text-primary hover:bg-purple-200"
-                      : "text-muted-foreground hover:bg-muted"
-                  }`}
+                  </Badge>
+                </button>
+                <button
                   onClick={() => setActiveFilter("locked")}
-                >
-                  Locked{" "}
-                  <span
-                    className={`ml-2 text-xs px-2 py-0.5 rounded-full ${activeFilter === "locked" ? "bg-white" : "bg-muted"}`}
-                  >
-                    {rewards.filter((r) => userData.points < r.points_required && r.points_required > 0).length}
-                  </span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className={`${
-                    activeFilter === "coming_soon"
-                      ? "bg-purple-100 text-primary hover:bg-purple-200"
-                      : "text-muted-foreground hover:bg-muted"
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
+                    activeFilter === "locked"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-muted-foreground hover:bg-gray-200"
                   }`}
-                  onClick={() => setActiveFilter("coming_soon")}
                 >
-                  Coming Soon{" "}
-                  <span
-                    className={`ml-2 text-xs px-2 py-0.5 rounded-full ${activeFilter === "coming_soon" ? "bg-white" : "bg-muted"}`}
-                  >
+                  Locked
+                  <Badge variant="secondary" className="bg-white/20 text-white text-xs">
+                    {rewards.filter((r) => userData.points < r.points_required && r.points_required > 0).length}
+                  </Badge>
+                </button>
+                <button
+                  onClick={() => setActiveFilter("coming_soon")}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-colors ${
+                    activeFilter === "coming_soon"
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-muted-foreground hover:bg-gray-200"
+                  }`}
+                >
+                  Coming Soon
+                  <Badge variant="secondary" className="bg-white/20 text-white text-xs">
                     {rewards.filter((r) => r.points_required === 0).length}
-                  </span>
-                </Button>
+                  </Badge>
+                </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {rewards
                   .filter((reward) => {
                     const isLocked = userData.points < reward.points_required && reward.points_required > 0
@@ -734,7 +735,7 @@ export function RewardsHub({ user: initialUser }: { user: any }) {
 
                     return (
                       <Card key={reward.id} className="border">
-                        <CardContent className="p-6 flex flex-col items-center text-center">
+                        <CardContent className="p-4 sm:p-6 flex flex-col items-center text-center">
                           <div
                             className={`w-16 h-16 rounded-2xl ${getIconBg(reward.name)} flex items-center justify-center mb-4`}
                           >
